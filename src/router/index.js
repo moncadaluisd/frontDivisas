@@ -6,6 +6,10 @@ import Register from '../views/Auth/Register.vue'
 import Comprador from '@/views/Comprador.vue'
 import Search from '@/views/Search.vue'
 import Chat from '@/views/Chat.vue'
+import Transacciones from '@/views/Transacciones.vue'
+import Soporte from '@/views/Soporte.vue'
+import Perfil from '@/views/Perfil.vue'
+import Pagos from '@/views/Pagos.vue'
 import ResetPassword from '../views/Auth/ResetPassword.vue'
 //import store from '@/store/index.js'
 Vue.use(VueRouter)
@@ -44,6 +48,30 @@ Vue.use(VueRouter)
       }
   },
   {
+    path: '/transacciones',
+    name: 'Transacciones',
+    component: Transacciones,
+    meta: {
+        requiresAuth: true
+      }
+  },
+  {
+    path: '/soporte',
+    name: 'Soporte',
+    component: Soporte,
+    meta: {
+        requiresAuth: true
+      }
+  },
+  {
+    path: '/perfil/:usuario',
+    name: 'Perfil',
+    component: Perfil,
+    meta: {
+        requiresAuth: false
+      }
+  },
+  {
     path: '/search',
     name: 'Search',
     component: Search,
@@ -63,6 +91,15 @@ Vue.use(VueRouter)
     path: '/comprador',
     name: 'Comprador',
     component: Comprador,
+    meta: {
+        requiresAuth: true,
+        buyer: true
+      }
+  },
+  {
+    path: '/pagos',
+    name: 'Pagos',
+    component: Pagos,
     meta: {
         requiresAuth: true,
         buyer: true

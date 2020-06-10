@@ -66,12 +66,13 @@ export default {
                   })
                   .catch(function(error) {
                       console.log(error)
-                      this.$buefy.toast.open({
+                      that.$buefy.toast.open({
      duration: 5000,
-     message: error,
+     message: error.message,
      position: 'is-bottom',
      type: 'is-danger'
  })
+ that.$parent.close()
                   })
     }
   },

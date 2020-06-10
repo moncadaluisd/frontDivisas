@@ -58,8 +58,22 @@ export default {
   methods:{
     sendPost(post)
     {
-      this.isComponentModalActive= true
-      this.info =post
+
+      if (post.id_user != this.$store.state.auth.user.id) {
+        this.isComponentModalActive= true
+        this.info = post
+      }else{
+        this.isComponentModalActive= false
+        this.$buefy.toast.open({
+  duration: 5000,
+  message: 'No puedes abrir una solicitud tu mismo',
+  position: 'is-bottom',
+  type: 'is-danger'
+  })
+      }
+      console.log(post.id_user == this.$store.state.auth.user.id);
+
+
     },
     getQuery()
     {
@@ -80,7 +94,11 @@ export default {
   created(){
     this.getQuery();
 
+  },
+  computed:{
+
   }
+
 }
 </script>
 

@@ -7,27 +7,33 @@
             <img class="is-rounded" src="/img/logo-divisastogo-color.png">
           </figure>
       </div>
+      <div class="" style="text-align:center">
+       <p>{{ username }}</p>
+      </div>
       <div class="mt-20">
         <b-menu class="is-custom-mobile">
                         <b-menu-list label="Menu">
-                          <router-link :to="{ name: 'Home' }"><b-menu-item label="Inicio" icon="link" ></b-menu-item></router-link>
+
+                          <router-link :to="{ name: 'Home' }"><b-menu-item label="Inicio" icon="home-variant" ></b-menu-item></router-link>
 
 
-                            <b-menu-item icon="account" type="is-info" label="Mi Cuenta">
+                            <b-menu-item icon="account" type="is-primary" label="Mi Cuenta">
                                 <b-menu-item icon="account-box" label="Editar Cuenta"  @click="isComponentModalActive = true"></b-menu-item>
                                 <b-menu-item icon="home-account" label="Segur Contra Estafa"></b-menu-item>
+                                <router-link :to="{ name: 'Perfil' , param: {username: this.username} }"><b-menu-item icon="shield-account" label="Perfil"></b-menu-item></router-link>
                             </b-menu-item>
 
-                            <b-menu-item icon="account" type="is-info" label="Cajero" v-if="comprador || admin">
+                            <b-menu-item icon="account-lock-outline" type="is-info" label="Cajero" v-if="comprador || admin">
                             <router-link :to="{ name: 'Comprador' }">    <b-menu-item icon="account-box" label="Panel de compradores"  ></b-menu-item></router-link>
-                                <b-menu-item icon="home-account" label="Pagos"></b-menu-item>
+                              <router-link :to="{ name: 'Pagos' }">    <b-menu-item icon="bank-transfer-in" label="Pagos"></b-menu-item></router-link>
 
                             </b-menu-item>
 
                         </b-menu-list>
                         <b-menu-list>
-                            <b-menu-item label="Transacciones" icon="link"></b-menu-item>
-                            <b-menu-item label="Soporte" icon="link"></b-menu-item>
+                          <b-menu-item label="Notificaciones" icon="bell"></b-menu-item>
+                          <router-link :to="{ name: 'Transacciones' }"><b-menu-item label="Transacciones" icon="card-bulleted"></b-menu-item></router-link>
+                          <router-link :to="{ name: 'Soporte' }"><b-menu-item label="Soporte" icon="face-agent"></b-menu-item></router-link>
                         </b-menu-list>
 
 

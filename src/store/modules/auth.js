@@ -68,6 +68,7 @@ export default {
           .catch(function (error){
             localStorage.removeItem('token')
             console.log(error.response.data);
+            commit('auth_success', false)
             reject(error.response.data)
           });
       })

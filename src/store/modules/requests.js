@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     request: [],
+    requestInactive: [],
 
   },
   actions: {
@@ -19,19 +20,38 @@ export default {
           .catch(function (error){
 
 
-            reject(error)
+            reject(error.response.data)
           });
       })
     },
-    addPost({commit}, data)
+    getRequest({commit})
     {
-      commit('add_posts', data);
+      return new Promise((resolve,reject) => {
+        HTTP.get('/announcement/request')
+          .then(function (response){
+            // Getting Data from response
+            commit('requests_get', response.data.data)
+            resolve(response.data.data)
+          })
+          .catch(function (error){
+
+            console.log(error);
+            reject(error.response.data.message)
+          });
+      })
     }
   },
   mutations : {
     request_push(state, data){
       state.request.push(data)
     },
+    requests_get(state, data)
+    {
+      state.request = data
+    },
+    requests_inactive(state,data){
+      state.requestInactive = data;
+    }
 
   },
 
