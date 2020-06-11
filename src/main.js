@@ -7,7 +7,10 @@ import App from './App.vue'
 import 'buefy/dist/buefy.css'
 import Vue2Filters from 'vue2-filters'
 
+import Multiselect from 'vue-multiselect'
 
+// register globally
+Vue.component('multiselect', Multiselect)
 
 
 

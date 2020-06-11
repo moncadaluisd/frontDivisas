@@ -1,7 +1,7 @@
 <template >
   <div class="modal-card" style="width: auto">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">Crear nuevo posts</p>
+                    <p class="modal-card-title">Editar Post</p>
                 </header>
                 <section class="modal-card-body">
                   <b-notification
@@ -21,29 +21,13 @@
                           <div class="column">
 
                             <b-field label="Compro">
-                              <b-autocomplete
-
-                                  placeholder="Paypal, zelle..."
-                                  :keep-first="keepFirst"
-                                  :open-on-focus="openOnFocus"
-                                  :data="fromToObj"
-                                  field="name"
-                                  @select="option => form.id_currency_from = option.id">
-                              </b-autocomplete>
+                              <h3 class="title is-4" style="margin-left: 40px;"> {{ currencyFrom.name }}</h3>
                           </b-field>
                           </div>
                           <div class="column">
 
                             <b-field label="Por">
-                              <b-autocomplete
-
-                                  placeholder="Zelle, Bolivares..."
-                                  :keep-first="keepFirst"
-                                  :open-on-focus="openOnFocus"
-                                  :data="toToObj"
-                                  field="name"
-                                  @select="option => form.id_currency_to = option.id">
-                              </b-autocomplete>
+                                <h3 class="title is-4" style="margin-left: 40px;"> {{ currencyTo.name }}</h3>
                           </b-field>
                           </div>
 
@@ -97,6 +81,7 @@
                       <b-input maxlength="200" type="textarea" v-model="form.description"></b-input>
                   </b-field>
   <button class="button is-primary" @click.prevent="store">Guardar</button>
+    <button class="button is-danger" style="margin-left: 20px;" @click.prevent="destroy">Eliminar</button>
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button" type="button" @click="$parent.close()">Close</button>
@@ -108,8 +93,8 @@
 <script>
 import {HTTP} from '@/helpers/apiHost'
 export default {
-  props: [''],
-  name: 'CreatePost',
+  props: ['info'],
+  name: 'EditPost',
   data(){
     return{
       category: [],
@@ -118,33 +103,29 @@ export default {
       keepFirst: false,
 openOnFocus: true,
 selected: null,
-      form: {
-              //
-              id_currency_from:'',
-              id_currency_to: '',
-              id_category:  '',
-              title:  '',
-              description:  '',
-              price:  0,
-              min:  0,
-              max: 0,
-      }
+form: {
+        //
+        id_currency_from: this.info.id_currency_from,
+        id_currency_to: this.info.id_currency_to,
+        id_category:  this.info.id_category,
+        title:  this.info.title,
+        description:  this.info.description,
+        price:  this.info.price,
+        min:  this.info.min,
+        max: this.info.max,
+}
     }
   },
   methods: {
+
     store()
     {
-      if (this.form.id_currency_to === this.form.id_currency_from) {
-      return  this.$buefy.toast.open({
-                   message: 'No puedes tener dos monedas iguales',
-                   type: 'is-danger'
-               })
-      }
       var that = this
-      HTTP.post('/announcement/create',this.form)
+      HTTP.put('/announcement/create/' + this.info.id,this.form)
         .then(function (response){
          //Getting data from response
-         that.$store.dispatch('comprador/addPost',response.data.data)
+         console.log(response)
+         that.$store.dispatch('comprador/showAccess')
          that.$buefy.toast.open({
                     message: 'Se ha actualizado correctamente',
                     type: 'is-success'
@@ -153,10 +134,6 @@ selected: null,
         })
         .catch( function (error){
           // Describe error!
-          that.$buefy.toast.open({
-                     message: error.response.data.message,
-                     type: 'is-danger'
-                 })
           if (error.response.status == 422){
             that.errors = error.response.data.errors;
      }
@@ -187,7 +164,26 @@ selected: null,
         .catch(function (error){
           console.log(error);
         });
+    },
+    destroy()
+    {
+      var that = this
+      HTTP.delete('/announcement/create/' + this.info.id)
+        .then(function (response){
+          // Getting Data from response
+          console.log(response)
+          that.$buefy.toast.open({
+                     message: 'Se ha eliminado correctamente',
+                     type: 'is-success'
+                 })
+                 that.$store.dispatch('comprador/showAccess')
+          that.$parent.close()
+        })
+        .catch(function (error){
+          console.log(error);
+        });
     }
+
 
 },
 created(){
@@ -206,10 +202,26 @@ computed: {
                })
            },
 
+
              validationErrors(){
                  let errors = Object.values(this.errors);
                  errors = errors.flat();
                  return errors;
+             },
+             currencyFrom()
+             {
+               var da = this.data.find(currency => {
+                  return currency.id === this.form.id_currency_from
+               })
+               return da
+             },
+
+             currencyTo()
+             {
+               var da = this.data.find(currency => {
+                  return currency.id === this.form.id_currency_to
+               })
+               return da
              }
 
        },

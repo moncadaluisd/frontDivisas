@@ -8,7 +8,7 @@
           </b-field>
           <div class="field">
             <div class="control is-clearfix">
-              <VuePhoneNumberInput v-model="form.phone" />
+              <VuePhoneNumberInput v-model="form.movil" @update="getNumber($event)" />
             </div>
             <p class="help is-danger" v-if="errors.phone  !== ''">
               {{ errors.phone }}
@@ -69,6 +69,7 @@ export default {
       form: {
         email: '',
         password: '',
+        movil: '',
         phone: '',
         username: '',
         password_confirmation: ''
@@ -82,6 +83,9 @@ export default {
     }
   },
   methods: {
+    getNumber(e){
+      this.phone= e.e164
+    },
     registerUser()
     {
       this.errors = {

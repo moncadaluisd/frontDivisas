@@ -12,7 +12,7 @@
           </div>
           <div class="" v-if="posts.length > 0">
               <div class="box " style="background-color: #f7f8fc" v-for="post in posts"  :key="post.id">
-                 <button class="button is-info is-pulled-right">Cambiar Posts</button>
+                 <button class="button is-info is-pulled-right" @click="editPost(post)">Cambiar Posts</button>
 
                 <h3 class="title is-5"> <b-tooltip :label="post.currency_from.name">{{ post.currency_from.iso }}  </b-tooltip> a <b-tooltip :label="post.currency_to.name">{{ post.currency_to.iso }}</b-tooltip></h3>
                 <p class="title is-6">Tasa: <span class="has-text-danger	">{{ post.price }}</span>$</p>
@@ -51,7 +51,7 @@
           <div class="">
 
       <div class="" v-if="requests.length > 0">
-          <div class="box " style="background-color: #f7f8fc" v-for="da in requests"  :key="da">
+          <div class="box " style="background-color: #f7f8fc" v-for="da in requests"  :key="da.id">
              <button class="button is-danger is-pulled-right" @click.prevent="goToChat(da.id)">Ir al Cambio</button>
 
   <h3 class="title is-5"> <b-tooltip :label="da.currencyFromName">{{ da.currencyFromIso}}  </b-tooltip> a <b-tooltip :label="da.currencyToName">{{ da.currencyToIso }}</b-tooltip></h3>
@@ -81,27 +81,41 @@
       has-modal-card full-screen :can-cancel="false">
       <CreatePost></CreatePost>
   </b-modal>
+
+  <b-modal :active.sync="isComponentModalActiveEdit"
+  has-modal-card full-screen :can-cancel="false">
+  <EditPost :info="post"></EditPost>
+</b-modal>
     </div>
 </div>
 </template>
 
 <script>
 import CreatePost from './part/CreatePost'
+import EditPost from './part/EditPost'
 import {mapState} from 'vuex'
 export default {
   components: {
-           CreatePost
+           CreatePost,
+           EditPost
        },
   data(){
     return{
       isComponentModalActive: false,
+      isComponentModalActiveEdit: false,
       animated: true,
+      post: {}
 
 
     }
 
   },
   methods: {
+    editPost(post)
+    {
+      this.post = post
+      this.isComponentModalActiveEdit= true
+    },
     getRequests()
     {
       var that = this
