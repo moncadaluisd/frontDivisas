@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # README #
 
@@ -53,3 +54,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# frontDivisas
+Divisastogo
+>>>>>>> 3017b8832d0592e5ca465c00ddc972c605ac20c3
