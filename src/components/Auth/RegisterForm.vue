@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     getNumber(e){
-      this.phone= e.e164
+      this.form.phone= e.e164
     },
     registerUser()
     {

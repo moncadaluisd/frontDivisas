@@ -52,7 +52,7 @@ export default {
           });
       })
     },
-    me({commit}){
+     me({commit}){
       return new Promise((resolve,reject) => {
         HTTP.get('/me')
           .then(function (response){
@@ -105,8 +105,10 @@ export default {
       state.comprador = data
     }
 
-
-
   },
+  getters: {
+  isLoggedIn: state => !!state.isLoggin,
+
+}
 
 }

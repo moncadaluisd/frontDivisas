@@ -6,7 +6,7 @@
 </template>
 <script>
 import Footer from '@/layouts/footer'
-import { mapState } from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   data(){
     return{
@@ -17,32 +17,16 @@ export default {
 
     Footer
   },
-  computed: {
-    ...mapState('auth', {
-     isLoggin: 'isLoggin'
-   }),
+  methods:{
+    ...mapActions('auth', ['me'])
+  },
+  created()
+  {
+
+      this.me();
 
 
- },
- methods: {
-   getLoggin()
-   {
-
-     this.$store.dispatch('auth/me')
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
-
-          })
-   },
-
-
- },
- created(){
-   this.getLoggin();
- }
+  }
 }
 </script>
 <style>
@@ -72,6 +56,11 @@ box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2)!important;
 .logo img{
   width: 120px;
   height: 100px;
+}
+
+.textarea:not([rows]) {
+    max-height: 120px!important;
+    min-height: 80px!important;
 }
 
 </style>

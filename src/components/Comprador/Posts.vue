@@ -1,40 +1,25 @@
 <template>
 
     <div class="column">
-      <div class="columns custom-columns">
-
-        <div class="column is-6 box" style="margin-top: 0.75rem;">
-
-
-
-          <div class="" style="margin-bottom: 50px;">
-            <button class="button is-info is-pulled-right" @click.prevent="isComponentModalActive = true">Crear mas Posts</button>
-          </div>
-          <div class="" v-if="posts.length > 0">
-              <div class="box " style="background-color: #f7f8fc" v-for="post in posts"  :key="post.id">
-                 <button class="button is-info is-pulled-right" @click="editPost(post)">Cambiar Posts</button>
-
-                <h3 class="title is-5"> <b-tooltip :label="post.currency_from.name">{{ post.currency_from.iso }}  </b-tooltip> a <b-tooltip :label="post.currency_to.name">{{ post.currency_to.iso }}</b-tooltip></h3>
-                <p class="title is-6">Tasa: <span class="has-text-danger	">{{ post.price }}</span>$</p>
-                <p> min: <span class="has-text-danger	">{{ post.min }}</span>  max: <span class="has-text-danger	">{{ post.max }}</span></p>
-                <div class="is-pulled-right">
-                  <p>{{ post.user.username }}</p>
-                </div>
-                <p class="subtitle is-6">{{ post.title }}</p>
-
-              </div>
+      <div class="bd-tabs box">
+        <div class="tabs">
+          <ul>
+            <li @click="nav = 1">General</li>
+            <li  @click="nav = 2">Mis Posts</li>
+            <li  @click="nav = 3">Transacciones</li>
+          </ul>
         </div>
+      </div>
 
-            <div class="box" v-else>
-                <h3 class="title is-3">No hay nada por aqui todavia...</h3>
-                <h4 class="subtitle is-4"> Comienza ahora.</h4>
-            </div>
+      <div class="columns custom-columns"  v-if="nav == 1">
 
 
-        </div>
 
 
-        <div class="column is-6">
+
+
+
+        <div class="column is-9">
           <div class="is-danger left-border"  style="background-color: rgba(236, 167, 75, 0.62);margin-bottom: 20px;padding: 10px;boder-bo">
               <h2 class="subtitle is-4">Transacciones activas</h2>
           </div>
@@ -77,45 +62,44 @@
 
 
       </div>
-      <b-modal :active.sync="isComponentModalActive"
-      has-modal-card full-screen :can-cancel="false">
-      <CreatePost></CreatePost>
-  </b-modal>
+            <Wallet :tipo="1"></Wallet>
 
-  <b-modal :active.sync="isComponentModalActiveEdit"
-  has-modal-card full-screen :can-cancel="false">
-  <EditPost :info="post"></EditPost>
-</b-modal>
     </div>
+
+
+      <div class="column custom-columns" v-if="nav == 2">
+      <MisPosts></MisPosts>
+      </div>
+
+      <div class="" v-if="nav == 3">
+        <Transacciones></Transacciones>
+      </div>
 </div>
 </template>
 
 <script>
-import CreatePost from './part/CreatePost'
-import EditPost from './part/EditPost'
+import MisPosts from './part/MisPosts'
+import Transacciones from './part/Transacciones'
+import Wallet from '@/components/Pagos/Wallet.vue'
 import {mapState} from 'vuex'
 export default {
   components: {
-           CreatePost,
-           EditPost
-       },
+    MisPosts,
+    Wallet,
+    Transacciones
+  },
   data(){
     return{
       isComponentModalActive: false,
       isComponentModalActiveEdit: false,
       animated: true,
-      post: {}
-
-
+      post: {},
+      nav: 1
     }
 
   },
   methods: {
-    editPost(post)
-    {
-      this.post = post
-      this.isComponentModalActiveEdit= true
-    },
+
     getRequests()
     {
       var that = this
@@ -132,7 +116,8 @@ export default {
     {
       this.$router.push({ path: 'chat/'+ id})
       this.$router.go({ path: 'chat/'+ id})
-    }
+    },
+
   },
   computed: {
     ...mapState('comprador', ['posts', 'requests'])
@@ -146,5 +131,8 @@ export default {
 <style lang="css" scoped>
 .left-border{
   border-left: 5px solid rgba(236, 167, 75, 1);
+}
+.tabs ul li {
+  margin: 10px;
 }
 </style>

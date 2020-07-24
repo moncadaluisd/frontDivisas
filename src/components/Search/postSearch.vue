@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <div class="box">
-      <Search :info="true"></Search>
+      <Search :info="true" @search="searchData($event)"></Search>
     </div>
     <div class="box">
       <div class="box" v-if="animated">
@@ -13,6 +13,7 @@
 
           <b-skeleton :animated="animated"></b-skeleton>
       </div>
+              <div class="" v-if="posts.length > 0">
       <div class="box " style="background-color: #f7f8fc" v-for="post in posts"  :key="post.id">
          <button class="button is-info is-pulled-right" @click="sendPost(post)">Cambiar Posts</button>
 
@@ -24,6 +25,12 @@
         </div>
         <p class="subtitle is-6">{{ post.title }}</p>
 
+      </div>
+    </div>
+
+      <div class="box" v-else>
+          <h3 class="title is-3">No hay nada por aqui todavia...</h3>
+          <h4 class="subtitle is-4"> Comienza ahora.</h4>
       </div>
     </div>
     <b-modal :active.sync="isComponentModalActive"
@@ -56,6 +63,7 @@ export default {
     }
   },
   methods:{
+
     sendPost(post)
     {
 

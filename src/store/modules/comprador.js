@@ -33,7 +33,7 @@ export default {
           .then(function (response){
             // Getting Data from response
             console.log(response.data.data)
-            commit('get_requests', response.data.data)
+            commit('get_requests', response.data.data.data)
             resolve(response.data.data)
           })
           .catch(function (error){

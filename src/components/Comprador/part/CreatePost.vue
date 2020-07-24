@@ -51,17 +51,6 @@
                     </div>
                   </div>
 
-                  <b-field label="Elige Categoria">
-           <b-select placeholder="Selecciona una categoria" v-model="form.id_category" expanded>
-             <option value=""> Selecciona una categoria</option>
-               <option
-                   v-for="da in category"
-                   :value="da.id"
-                   :key="da.id">
-                   {{ da.name }}
-               </option>
-           </b-select>
-       </b-field>
 
                     <b-field label="Titulo del post">
                         <b-input

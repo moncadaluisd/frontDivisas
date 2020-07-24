@@ -4,7 +4,7 @@
 
   <div class="column">
     <Search></Search>
-    <div class="columns custom-columns">
+    <div class="columns ">
 
       <div class="column is-8">
         <div class="is-danger left-border"  style="background-color: rgba(236, 167, 75, 0.62);margin-bottom: 20px;padding: 10px;boder-bo">
@@ -39,6 +39,9 @@
 
             <b-skeleton :animated="animated"></b-skeleton>
         </div>
+        <div class="" v-if="data.length > 0">
+
+
         <div class="box " style="background-color: #f7f8fc" v-for="da in data"  :key="da.id">
            <button class="button is-info is-pulled-right" @click.prevent="goToChat(da.id)">Ir al Cambio</button>
 
@@ -49,6 +52,11 @@
           </div>
           <p class="subtitle is-6">{{ da.announcement.title }}</p>
 
+        </div>
+            </div>
+        <div class="box" v-else>
+            <h3 class="title is-3">No hay nada por aqui todavia...</h3>
+            <h4 class="subtitle is-4"> Comienza ahora.</h4>
         </div>
 
 
@@ -107,13 +115,12 @@ export default {
     },
     goToChat(id){
       this.$router.push({ path: 'chat/'+ id})
-      this.$router.go({ path: 'chat/'+ id})
     }
   },
   computed:{
 
   },
-  mounted(){
+  created(){
     this.getData()
   }
 

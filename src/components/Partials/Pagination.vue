@@ -1,7 +1,7 @@
 <template>
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <a class="pagination-previous" @click.prevent="changePage(pagination.current_page - 1)">Anterior</a>
-    <a class="pagination-next" @click.prevent="changePage(pagination.current_page + 1)">Siguiente Pagina</a>
+  <nav class="pagination" role="navigation" aria-label="pagination" style="margin-top: 20px;">
+    <a class="pagination-previous button is-warning" @click.prevent="changePage(pagination.current_page - 1)">Anterior</a>
+    <a class="pagination-next button is-danger" @click.prevent="changePage(pagination.current_page + 1)">Siguiente Pagina</a>
     <ul class="pagination-list">
       <li v-for="page in pages"  :key="page" :class="isCurrentPage(page) ? 'active' : ''">
         <a class="pagination-link" aria-label="Goto page 1" @click.prevent="changePage(page)">{{ page }}</a>
@@ -51,4 +51,7 @@
 
 
 <style lang="css" scoped>
+.active a{
+  background-color: rgb(241, 241, 241)
+}
 </style>

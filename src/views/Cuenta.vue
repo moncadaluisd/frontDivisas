@@ -3,7 +3,7 @@
 
     <div class="columns">
       <User></User>
-      <General></General>
+      <Info></Info>
     </div>
   </div>
 </template>
@@ -11,13 +11,13 @@
 <script>
 // @ is an alias to /src
 import User from '@/components/Home/User.vue'
-import General from '@/components/Perfil/General.vue'
+import Info from '@/components/Account/Info.vue'
 
 export default {
   name: 'Perfil',
   components: {
     User,
-    General
+    Info
 
 
   }

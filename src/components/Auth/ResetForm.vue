@@ -7,7 +7,7 @@
             <b-input v-model="form.email" placeholder="Coloca tu correo"></b-input>
           </b-field>
 
-              <b-button type="is-success" expanded>Resetear clave</b-button>
+              <b-button type="is-success" expanded @click.prevent="sendResetMail()">Resetear clave</b-button>
         </div>
         <div class="field">
           <div class="control">
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import {HTTP} from '@/helpers/apiHost'
 export default {
   name: 'ResetForm',
   data(){
@@ -34,7 +35,28 @@ export default {
         email: '',
       }
     }
+  },
+  methods:{
+    sendResetMail()
+    {
+      var that =this
+      HTTP.post('/password/reset',this.form)
+        .then(function (response){
+         //Getting data from response
+         that.$buefy.toast.open({
+                    message: 'Se ha enviado un correo para cambiar la clave',
+                    type: 'is-success'
+                })
+         that.$router.push("/")
+         console.log(response)
+        })
+        .catch( function (error){
+          // Describe error!
+          console.log(error.message);
+        });
+    }
   }
+
 }
 </script>
 

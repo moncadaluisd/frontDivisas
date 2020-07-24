@@ -6,13 +6,32 @@ import Buefy from 'buefy'
 import App from './App.vue'
 import 'buefy/dist/buefy.css'
 import Vue2Filters from 'vue2-filters'
-
 import Multiselect from 'vue-multiselect'
+import VueChatScroll from 'vue-chat-scroll'
+
+
+Vue.use(VueChatScroll)
 
 // register globally
 Vue.component('multiselect', Multiselect)
 
 
+import Echo from 'laravel-echo'
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+  authEndpoint : 'http://localhost:8000/broadcasting/auth',
+    broadcaster: 'pusher',
+    key: '93effa87d855ac67af0e',
+    cluster: 'us2',
+    encrypted: false,
+    auth: {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
+  },
+}
+});
 
 
 Vue.prototype.$http = Axios;

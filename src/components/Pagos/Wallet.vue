@@ -10,7 +10,10 @@
                 size="is-medium">
             </b-icon></h3>
       </div>
-      <div class="" style="text-align:center;margin-top: 20px">
+      <div class="" style="text-align:center;margin-top: 20px" v-if="tipo == 1">
+        <button  name="button" class="button is-info" @click="$router.push({ path: '/pagos'})" >Ir a la parte de pagos</button>
+      </div>
+      <div class="" style="text-align:center;margin-top: 20px"  v-else>
         <button  name="button" class="button is-info" @click="isComponentModalActive = true" >Agregar un Pago</button>
       </div>
   </div>
@@ -28,6 +31,7 @@ export default {
   components: {
     'crear-pago': CrearPago
   },
+  props: ['tipo'],
   data()
   {
     return{

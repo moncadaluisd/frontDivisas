@@ -18,9 +18,9 @@
 
 
                             <b-menu-item icon="account" type="is-primary" label="Mi Cuenta">
-                                <b-menu-item icon="account-box" label="Editar Cuenta"  @click="isComponentModalActive = true"></b-menu-item>
-                                <b-menu-item icon="home-account" label="Segur Contra Estafa"></b-menu-item>
-                                <router-link :to="{ name: 'Perfil' , param: {username: this.username} }"><b-menu-item icon="shield-account" label="Perfil"></b-menu-item></router-link>
+                                <router-link :to="{ name: 'Cuenta'}"><b-menu-item icon="account-box" label="Editar Cuenta" ></b-menu-item></router-link>
+                                <!--<b-menu-item icon="home-account" label="Segur Contra Estafa"></b-menu-item>-->
+                                <router-link :to="{ name: 'Perfil', params: { usuario: username }}"><b-menu-item icon="shield-account" label="Perfil"></b-menu-item></router-link>
                             </b-menu-item>
 
                             <b-menu-item icon="account-lock-outline" type="is-info" label="Cajero" v-if="comprador || admin">
@@ -43,21 +43,16 @@
                     </b-menu>
       </div>
     </div>
-    <b-modal :active.sync="isComponentModalActive"
-    has-modal-card full-screen :can-cancel="false">
-    <UserEdit></UserEdit>
-</b-modal>
+
   </div>
 
 </template>
 
 <script>
-import UserEdit from './part/UserEdit.vue'
+
 import {mapState} from 'vuex'
 export default {
-  components: {
-           UserEdit
-       },
+
   data(){
     return{
       isComponentModalActive: false,

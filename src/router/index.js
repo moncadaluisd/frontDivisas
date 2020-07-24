@@ -10,7 +10,11 @@ import Transacciones from '@/views/Transacciones.vue'
 import Soporte from '@/views/Soporte.vue'
 import Perfil from '@/views/Perfil.vue'
 import Pagos from '@/views/Pagos.vue'
+import Cuenta from '@/views/Cuenta.vue'
+import Notificacion from '@/views/Notificacion.vue'
+import Notificaciones from '@/views/Notificaciones.vue'
 import ResetPassword from '../views/Auth/ResetPassword.vue'
+import Reset from '../views/Reset.vue'
 //import store from '@/store/index.js'
 Vue.use(VueRouter)
 
@@ -28,8 +32,13 @@ Vue.use(VueRouter)
     name: 'ResetPassword',
     component: ResetPassword,
     meta: {
-        requiresAuth: true
+        NotrequiresAuth: true
       }
+  },
+  {
+    path: '/reset/:codigo',
+    name: 'Reset',
+    component: Reset,
   },
   {
     path: '/registro',
@@ -51,6 +60,22 @@ Vue.use(VueRouter)
     path: '/transacciones',
     name: 'Transacciones',
     component: Transacciones,
+    meta: {
+        requiresAuth: true
+      }
+  },
+  {
+    path: '/notificaciones',
+    name: 'Notificaciones',
+    component: Notificaciones,
+    meta: {
+        requiresAuth: true
+      }
+  },
+  {
+    path: '/notificacion/:id',
+    name: 'Notificacion',
+    component: Notificacion,
     meta: {
         requiresAuth: true
       }
@@ -105,6 +130,14 @@ Vue.use(VueRouter)
         buyer: true
       }
   },
+  {
+    path: '/cuenta',
+    name: 'Cuenta',
+    component: Cuenta,
+    meta: {
+        requiresAuth: true,
+      }
+  },
 
 ]
 
@@ -116,16 +149,24 @@ const router = new VueRouter({
   routes
 })
 
+
+
+
+
+
+
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (localStorage.getItem('token')) {
-        next()
-        return
-      }
-      next('/')
-    } else {
-      next()
-    }
-    })
+
+     if (to.matched.some(record => record.meta.requiresAuth) && !localStorage.getItem('token')) {
+       return next('/')
+     }else if (to.matched.some(record => record.meta.NotrequiresAuth) && localStorage.getItem('token')) {
+       return next('/home')
+     }else{
+       return next()
+     }
+
+
+  })
+
 
 export default router

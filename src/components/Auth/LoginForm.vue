@@ -59,8 +59,7 @@ export default {
       var that = this
       this.$store.dispatch('auth/login', this.form)
           .then(() => {
-            that.$router.push("/home")
-              that.$router.go("/home")
+            that.$router.go({path: 'home'})
           })
           .catch(error => {
             console.log(error)
