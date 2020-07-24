@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export const HTTP = axios.create({
-  baseURL: `http://localhost:8000/api`,
+  baseURL: `http://18.231.186.105/api`,
   headers: {
     Authorization: "Bearer " + localStorage.getItem('token'),
   }
